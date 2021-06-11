@@ -16,17 +16,23 @@ struct gas {
 
 static
 inline
-void snap(size_t sz, gas gaz) {
-  uint8_t * gaz_p = (uint8_t *) gaz.gp;
+void snap(size_t sz, gas * gaz) {
+  uint8_t * gaz_p = (uint8_t *) gaz;
+  printf("base address: %p, size: %zu\n", gaz, sz);
   for (size_t x_ = 0ul, cc = 0ul; x_ < sz; ++x_) {
-    printf("%02x%s", *gaz_p++, (++cc % 16 == 0 ? "\n" : (cc % 8 == 0 ? "   " : " ")));
+    printf("%02x%s", *gaz_p++,
+           (++cc % 16 == 0 ? "\n" : (cc % 8 == 0 ? "   " : " ")));
   }
 }
 
 int main(int argc, char const * argv[]) {
 
   gas gaz = {
-    .gp = &gaz, .cc = 'A', .ii = INT_MAX, .ss = SHRT_MAX, .ul = ULONG_MAX,
+    .gp = &gaz,
+    .cc = 'A',
+    .ii = INT_MAX,
+    .ss = SHRT_MAX,
+    .ul = ULONG_MAX,
   };
   strcpy(gaz.st, "align gas");
   printf("++: %p\n", &gaz);
@@ -37,11 +43,13 @@ int main(int argc, char const * argv[]) {
   printf("ul: %p\n", &gaz.ul);
   printf("st: %p\n", &gaz.st);
   putchar('\n');
-  printf("size: %zu, gp: %p, cc: '%c', ii: %d, ss: %hd, ul: %lu, st: \"%s\".\n",
-         sizeof(gas), gaz.gp, gaz.cc, gaz.ii, gaz.ss, gaz.ul, gaz.st);
+  printf("size: %zu,\ngp: %p,\ncc: '%c',"
+         "\nii: %d,\nss: %hd,\nul: %lu,\nst: \"%s\".\n",
+         sizeof(gas), gaz.gp, gaz.cc,
+         gaz.ii, gaz.ss, gaz.ul, gaz.st);
   putchar('\n');
 
-  snap(sizeof(gas), gaz);
+  snap(sizeof(gas), &gaz);
 
   return 0;
 }
