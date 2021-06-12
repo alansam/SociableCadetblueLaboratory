@@ -16,7 +16,7 @@ struct gas {
 
 static
 inline
-void snap(size_t sz, gas * gaz) {
+void snap(size_t sz, void * gaz) {
   uint8_t * gaz_p = (uint8_t *) gaz;
   printf("base address: %p, size: %zu\n", gaz, sz);
   for (size_t x_ = 0ul, cc = 0ul; x_ < sz; ++x_) {
