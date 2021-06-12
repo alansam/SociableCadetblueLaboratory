@@ -11,7 +11,7 @@ struct gas {
   int32_t   ii;
   int16_t   ss;
   uint64_t  ul;
-  char      st[10];
+  char      st[12];
 };
 
 static
@@ -34,7 +34,8 @@ int main(int argc, char const * argv[]) {
     .ss = SHRT_MAX,
     .ul = ULONG_MAX,
   };
-  strcpy(gaz.st, "align gas");
+  strcpy(gaz.st, "\u00a3align gas");  //  £align gas
+
   printf("++: %p\n", &gaz);
   printf("gp: %p\n", &gaz.gp);
   printf("cc: %p\n", &gaz.cc);
@@ -43,6 +44,7 @@ int main(int argc, char const * argv[]) {
   printf("ul: %p\n", &gaz.ul);
   printf("st: %p\n", &gaz.st);
   putchar('\n');
+
   printf("size: %zu,\ngp: %p,\ncc: '%c',"
          "\nii: %d,\nss: %hd,\nul: %lu,\nst: \"%s\".\n",
          sizeof(gas), gaz.gp, gaz.cc,
